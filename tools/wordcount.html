@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter - CrispyTools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            padding: 30px;
+        }
+
+        .stat-box {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .mini-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+
+        .mini-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="../index.html"><span
+                    style="color: #818cf8;">Crispy</span>Tools</a>
+            <div class="ms-auto"><a href="../index.html"
+                    class="btn btn-outline-light btn-sm rounded-pill px-3">Dashboard</a></div>
+        </div>
+    </nav>
+
+    <main class="container my-5 flex-grow-1">
+        <div class="tool-card shadow-sm">
+            <h2 class="fw-bold mb-4"><i class="fas fa-file-alt text-primary me-2"></i>Word Counter</h2>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="h4 fw-bold mb-0 text-primary" id="wCount">0</div>
+                        <div class="small text-muted">Words</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="h4 fw-bold mb-0 text-primary" id="cCount">0</div>
+                        <div class="small text-muted">Chars</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="h4 fw-bold mb-0 text-primary" id="sCount">0</div>
+                        <div class="small text-muted">Sentences</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <div class="h4 fw-bold mb-0 text-primary" id="rTime">0</div>
+                        <div class="small text-muted">Min Read</div>
+                    </div>
+                </div>
+            </div>
+
+            <textarea id="txt" class="form-control border-0 bg-light p-3" rows="10" placeholder="Type here..."
+                oninput="count()"></textarea>
+        </div>
+
+        <div class="mt-5">
+            <h5 class="fw-bold mb-3">Try Other Tools</h5>
+            <div class="row g-3">
+                <div class="col-md-3"><a href="bmi.html" class="mini-card text-center"><i
+                            class="fas fa-weight mb-2 text-primary"></i>
+                        <div class="small fw-bold">BMI Calculator</div>
+                    </a></div>
+                <div class="col-md-3"><a href="passgen.html" class="mini-card text-center"><i
+                            class="fas fa-key mb-2 text-primary"></i>
+                        <div class="small fw-bold">Password Gen</div>
+                    </a></div>
+                <div class="col-md-3"><a href="unit.html" class="mini-card text-center"><i
+                            class="fas fa-ruler mb-2 text-primary"></i>
+                        <div class="small fw-bold">Unit Converter</div>
+                    </a></div>
+                <div class="col-md-3"><a href="todo.html" class="mini-card text-center"><i
+                            class="fas fa-tasks mb-2 text-primary"></i>
+                        <div class="small fw-bold">Task Master</div>
+                    </a></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white py-4 border-top mt-5">
+        <div class="container text-center">
+            <p class="mb-0 text-muted small">&copy; 2026 CrispyTools | Developed by M. Waseem</p>
+        </div>
+    </footer>
+
+    <script>
+        function count() {
+            const t = document.getElementById('txt').value.trim();
+            const words = t ? t.split(/\s+/).length : 0;
+            document.getElementById('wCount').innerText = words;
+            document.getElementById('cCount').innerText = t.length;
+            document.getElementById('sCount').innerText = t ? t.split(/[.!?]+/).filter(Boolean).length : 0;
+            document.getElementById('rTime').innerText = Math.ceil(words / 200);
+        }
+    </script>
+</body>
+
+</html>

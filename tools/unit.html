@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - CrispyTools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            padding: 40px;
+        }
+
+        .mini-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+
+        .mini-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="../index.html"><span
+                    style="color: #818cf8;">Crispy</span>Tools</a>
+            <div class="ms-auto"><a href="../index.html"
+                    class="btn btn-outline-light btn-sm rounded-pill px-3">Dashboard</a></div>
+        </div>
+    </nav>
+
+    <main class="container my-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="tool-card shadow-sm">
+                    <h2 class="fw-bold mb-4 text-center"><i class="fas fa-exchange-alt text-primary me-2"></i>Unit
+                        Converter</h2>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">From Value</label>
+                        <input type="number" id="inputVal" class="form-control form-control-lg bg-light border-0"
+                            placeholder="Enter value" oninput="convert()">
+                    </div>
+
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">From</label>
+                            <select id="fromUnit" class="form-select border-0 bg-light" onchange="convert()">
+                                <option value="m">Meters</option>
+                                <option value="km">Kilometers</option>
+                                <option value="ft">Feet</option>
+                                <option value="in">Inches</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">To</label>
+                            <select id="toUnit" class="form-select border-0 bg-light" onchange="convert()">
+                                <option value="m">Meters</option>
+                                <option value="km">Kilometers</option>
+                                <option value="ft" selected>Feet</option>
+                                <option value="in">Inches</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 text-center">
+                        <div class="text-muted small">Converted Result</div>
+                        <div class="h2 fw-bold text-primary mb-0" id="resultVal">0.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h5 class="fw-bold mb-3">Try Other Tools</h5>
+            <div class="row g-3">
+                <div class="col-md-3"><a href="clock.html" class="mini-card text-center"><i
+                            class="fas fa-clock mb-2 text-primary"></i>
+                        <div class="small fw-bold">Digital Clock</div>
+                    </a></div>
+                <div class="col-md-3"><a href="tips.html" class="mini-card text-center"><i
+                            class="fas fa-receipt mb-2 text-primary"></i>
+                        <div class="small fw-bold">Tip Splitter</div>
+                    </a></div>
+                <div class="col-md-3"><a href="wordcount.html" class="mini-card text-center"><i
+                            class="fas fa-font mb-2 text-primary"></i>
+                        <div class="small fw-bold">Word Counter</div>
+                    </a></div>
+                <div class="col-md-3"><a href="base.html" class="mini-card text-center"><i
+                            class="fas fa-terminal mb-2 text-primary"></i>
+                        <div class="small fw-bold">Binary Hub</div>
+                    </a></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white py-4 border-top mt-5">
+        <div class="container text-center">
+            <p class="mb-0 text-muted small">&copy; 2026 CrispyTools | M. Waseem</p>
+        </div>
+    </footer>
+
+    <script>
+        function convert() {
+            const val = parseFloat(document.getElementById('inputVal').value);
+            const from = document.getElementById('fromUnit').value;
+            const to = document.getElementById('toUnit').value;
+            const resDisplay = document.getElementById('resultVal');
+
+            if (isNaN(val)) { resDisplay.innerText = "0.00"; return; }
+
+            // Convert everything to meters first (Base)
+            let meters = 0;
+            if (from === "m") meters = val;
+            else if (from === "km") meters = val * 1000;
+            else if (from === "ft") meters = val / 3.281;
+            else if (from === "in") meters = val / 39.37;
+
+            // Convert from meters to target
+            let result = 0;
+            if (to === "m") result = meters;
+            else if (to === "km") result = meters / 1000;
+            else if (to === "ft") result = meters * 3.281;
+            else if (to === "in") result = meters * 39.37;
+
+            resDisplay.innerText = result.toFixed(2);
+        }
+    </script>
+</body>
+
+</html>

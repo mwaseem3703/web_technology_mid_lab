@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - CrispyTools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            padding: 40px;
+        }
+
+        .pass-display {
+            background: #f8fafc;
+            border: 2px dashed #6366f1;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 1.5rem;
+            word-break: break-all;
+            margin-bottom: 20px;
+            color: #1e293b;
+            position: relative;
+        }
+
+        .mini-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+
+        .mini-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="../index.html"><span
+                    style="color: #818cf8;">Crispy</span>Tools</a>
+            <div class="ms-auto"><a href="../index.html"
+                    class="btn btn-outline-light btn-sm rounded-pill px-3">Dashboard</a></div>
+        </div>
+    </nav>
+
+    <main class="container my-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="tool-card shadow-sm">
+                    <h2 class="fw-bold mb-4 text-center"><i class="fas fa-shield-alt text-success me-2"></i>Secure
+                        PassGen</h2>
+
+                    <div id="output" class="pass-display text-center">P@ssword123</div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Password Length: <span id="lenVal">12</span></label>
+                        <input type="range" class="form-range" id="length" min="6" max="30" value="12"
+                            oninput="document.getElementById('lenVal').innerText = this.value">
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="nums"
+                                    checked><label class="form-check-label small">Numbers</label></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="syms"
+                                    checked><label class="form-check-label small">Symbols</label></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100 py-3 fw-bold rounded-3 mb-2"
+                        style="background: var(--primary);" onclick="generate()">Generate Password</button>
+                    <button class="btn btn-outline-secondary w-100 py-2 fw-bold rounded-3" onclick="copyPass()">Copy to
+                        Clipboard</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h5 class="fw-bold mb-3">Try Other Tools</h5>
+            <div class="row g-3">
+                <div class="col-md-3"><a href="color.html" class="mini-card text-center"><i
+                            class="fas fa-fill-drip mb-2 text-primary"></i>
+                        <div class="small fw-bold">Color Studio</div>
+                    </a></div>
+                <div class="col-md-3"><a href="base.html" class="mini-card text-center"><i
+                            class="fas fa-terminal mb-2 text-primary"></i>
+                        <div class="small fw-bold">Binary Hub</div>
+                    </a></div>
+                <div class="col-md-3"><a href="unit.html" class="mini-card text-center"><i
+                            class="fas fa-ruler mb-2 text-primary"></i>
+                        <div class="small fw-bold">Unit Converter</div>
+                    </a></div>
+                <div class="col-md-3"><a href="tips.html" class="mini-card text-center"><i
+                            class="fas fa-receipt mb-2 text-primary"></i>
+                        <div class="small fw-bold">Tip Splitter</div>
+                    </a></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white py-4 border-top mt-5">
+        <div class="container text-center">
+            <p class="mb-0 text-muted small">&copy; 2026 CrispyTools | Developed by M. Waseem</p>
+        </div>
+    </footer>
+
+    <script>
+        function generate() {
+            const len = document.getElementById('length').value;
+            const hasNum = document.getElementById('nums').checked;
+            const hasSym = document.getElementById('syms').checked;
+
+            let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (hasNum) charset += "0123456789";
+            if (hasSym) charset += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+            let retVal = "";
+            for (let i = 0; i < len; ++i) {
+                retVal += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            document.getElementById('output').innerText = retVal;
+        }
+
+        function copyPass() {
+            const text = document.getElementById('output').innerText;
+            navigator.clipboard.writeText(text);
+            alert("Password copied to clipboard!");
+        }
+
+        // Run once on load
+        generate();
+    </script>
+</body>
+
+</html>
